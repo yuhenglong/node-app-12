@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
 });
 
 // 使用routes
+// 访问/api/users，则会找到users里面的东西
 app.use("/api/users", users);
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
