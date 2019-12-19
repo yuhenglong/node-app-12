@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
+const passport = require("passport");
 const app = express();
 
 // 引入users.js
@@ -19,9 +20,21 @@ mongoose.connect(db).then(() => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-    res.send('hello word');
-});
+// 使用中间件实现允许跨域
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    next();
+})
+
+//passport 初始化
+app.use(passport.initialize());
+require("./config/passport")(passport);
+
+// app.get("/", (req, res) => {
+//     res.send('hello word');
+// });
 
 // 使用routes
 // 访问/api/users，则会找到users里面的东西
