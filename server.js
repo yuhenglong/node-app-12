@@ -6,6 +6,7 @@ const app = express();
 
 // 引入users.js
 const users = require("./routes/api/users.js");
+const profile = require("./routes/api/profile.js");
 
 // DB config
 const db = require("./config/keys").mongoURI;
@@ -39,6 +40,7 @@ require("./config/passport")(passport);
 // 使用routes
 // 访问/api/users，则会找到users里面的东西
 app.use("/api/users", users);
+app.use("/api/profile", profile);
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is running on ${port}`);
